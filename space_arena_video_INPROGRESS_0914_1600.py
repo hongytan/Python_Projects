@@ -134,11 +134,11 @@ class Player(Sprite):
 
     def rotate_left(self):
         # Rotates ship right
-        self.da = 0.3
+        self.da = 5
 
     def rotate_right(self):
         # Rotates ship right
-        self.da = -0.3
+        self.da = -5
 
     def stop_rotation(self):
         # Stops rotation
@@ -158,6 +158,10 @@ class Player(Sprite):
         self.dx = 0
         self.dy = 0
 
+    def fire(self):
+        # Fires a missile
+        missile.fire(self.x, self.y, self.heading, self.dx, self.dy)
+
     def render(self, pen):
         # Renders ship
         pen.shapesize(0.5, 1, None)
@@ -170,18 +174,70 @@ class Player(Sprite):
 
         # Renders health meter
         self.render_health_meter(pen)
-        
-class Enemy(Sprite):
-    pass
 
-class Powerups(Sprite):
-    pass
+class Missile(Sprite):
+    def __init__(self, x, y, shape, color):
+        Sprite.__init__(self, x, y, shape, color)
+        self.state = "ready"
+        self.thrust = 4.0
+        self.max_fuel = 200
+        self.fuel = self.max_fuel
+
+    def fire(self, x, y, heading, dx, dy):
+        # Fires a missile
+        self.state = "active"
+        self.x = x
+        self.y = y
+        self.heading = heading
+        self.dx = dx
+        self.dy = dy
+
+        self.dx += math.cos(math.radians(self.heading)) * self.thrust
+        self.dy += math.sin(math.radians(self.heading)) * self.thrust
+        
+    def render(self, pen):
+        # Renders missile
+        if self.state == "active":
+            pen.shapesize(0.2, 0.2, None)
+            pen.goto(self.x, self.y)
+            pen.setheading(self.heading)
+            pen.shape(self.shape)
+            pen.color(self.color)
+            pen.stamp()
+
+    def update(self):
+        """ Updates position of missiles """ 
+        if self.state == "active":
+            self.fuel -= self.thrust
+            if self.fuel <= 0:
+                self.reset()
+            
+            # Rotates missile
+            self.heading += self.da
+            self.heading %= 360
+
+            # Moves missle forward
+            self.x += self.dx
+            self.y += self.dy
+
+            # Border patrol
+            self.border_check()
+
+    def reset(self):
+        self.fuel = self.max_fuel
+        self.dx = 0
+        self.dy = 0
+        self.state = "ready"
+        
 
 # Creates the game objects
 game = Game(600, 300)
 
 # Create player object
-player = Player(0, 0, "triangle", "white")
+player = Player(100, 10, "triangle", "white")
+
+# Create missle object
+missile = Missile(0, 100, "circle", "yellow")
 
 # Create enemy object
 enemy = Sprite(0, 100, "square", "red")
@@ -198,20 +254,24 @@ sprites = []
 sprites.append(player)
 sprites.append(enemy)
 sprites.append(powerup)
+sprites.append(missile)
 
 # Keyboard bindings
 wn.listen()
 
 # Rotating player
-wn.onkeypress(player.rotate_left, "a")
-wn.onkeypress(player.rotate_right, "d")
-wn.onkeyrelease(player.stop_rotation, "a")
-wn.onkeyrelease(player.stop_rotation, "d")
+wn.onkeypress(player.rotate_left, "Left")
+wn.onkeypress(player.rotate_right, "Right")
+wn.onkeyrelease(player.stop_rotation, "Left")
+wn.onkeyrelease(player.stop_rotation, "Right")
 
 # Moving player
-wn.onkeypress(player.accelerate, "w")
-wn.onkeyrelease(player.decelerate, "w")
-wn.onkeypress(player.brake, "s")
+wn.onkeypress(player.accelerate, "Up")
+wn.onkeyrelease(player.decelerate, "Up")
+wn.onkeypress(player.brake, "Down")
+
+# Firing missiles
+wn.onkeypress(player.fire, "space")
 
 # Main loop
 while True:
