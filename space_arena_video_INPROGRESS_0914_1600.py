@@ -52,7 +52,7 @@ class Sprite():
         self.heading = 0
         self.da = 0
         self.thrust = 0.0
-        self.acceleration = 0.00005
+        self.acceleration = 0.1
         self.health = 100
         self.max_health = 100
         
