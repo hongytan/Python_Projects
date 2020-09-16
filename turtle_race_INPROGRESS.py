@@ -55,9 +55,6 @@ racers.append(racer_3)
 racers.append(racer_4)
 racers.append(racer_5)
 
-for racer in racers:
-    print(racer.score)
-
 # Main loop
 while GAME_ON_OFF:
     pen.clear()
@@ -69,9 +66,6 @@ while GAME_ON_OFF:
 
     wn.update()
 
-
-for racer in racers:
-    print(racer.score)
 
 
 
