@@ -1,6 +1,5 @@
 # Sudoku solver using recursion
 
-import pygame
 import numpy as np
 
 grid = [
