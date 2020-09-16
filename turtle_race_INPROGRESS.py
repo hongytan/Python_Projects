@@ -45,7 +45,7 @@ class Racers():
 racer_1 = Racers(0, 0, "green")
 racer_2 = Racers(100, 0, "white")
 racer_3 = Racers(-100, 0, "red")
-racer_4 = Racers(50, 0, "light blue")
+racer_4 = Racers(50, 0, "aqua")
 racer_5 = Racers(-50, 0, "yellow")
 
 racers = []
@@ -65,10 +65,6 @@ while GAME_ON_OFF:
         racer.winner()
 
     wn.update()
-
-
-
-
 
 
 
