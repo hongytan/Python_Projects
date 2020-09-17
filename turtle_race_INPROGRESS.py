@@ -1,4 +1,5 @@
 # Turtle race
+# Make program repeat after race is complete
 
 import turtle
 import random
@@ -13,8 +14,6 @@ pen = turtle.Turtle()
 pen.penup()
 pen.hideturtle()
 pen.speed(0)
-
-GAME_ON_OFF = True
 
 class Racers():
     def __init__(self, x, y, color):
@@ -36,11 +35,16 @@ class Racers():
         pen.goto(self.x, self.y)
         pen.stamp()
 
-    def winner(self):
-        global GAME_ON_OFF
+        pen.clear()
+        pen.goto(self.x, self.y - 20)
+        pen.write("{}".format(self.score), align='center', font=("Courier", 8, 'normal'))
+        
+    def reset(self):
         if self.y > 285:
             self.score += 1
-            GAME_ON_OFF = False
+            for racer in racers:
+                racer.y = 0
+                racer.dy = random.randrange(5, 20, 1) / 100
 
 racer_1 = Racers(0, 0, "green")
 racer_2 = Racers(100, 0, "white")
@@ -56,18 +60,16 @@ racers.append(racer_4)
 racers.append(racer_5)
 
 # Main loop
-while GAME_ON_OFF:
+
+while True:
     pen.clear()
 
     for racer in racers:
         racer.update()
         racer.render(pen)
-        racer.winner()
+        racer.reset()
 
     wn.update()
-
-
-
 
 
 
