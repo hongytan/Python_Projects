@@ -21,8 +21,7 @@ class Racers():
         self.y = y
         self.color = color
         self.heading = 90
-        self.dy = random.randrange(5, 20, 1) / 100
-        self.score = 0
+        self.dy = random.randrange(100, 120, 1) / 1000
 
     def update(self):
         self.y += self.dy
@@ -35,22 +34,17 @@ class Racers():
         pen.goto(self.x, self.y)
         pen.stamp()
 
-        pen.clear()
-        pen.goto(self.x, self.y - 20)
-        pen.write("{}".format(self.score), align='center', font=("Courier", 8, 'normal'))
-        
     def reset(self):
         if self.y > 285:
-            self.score += 1
             for racer in racers:
                 racer.y = 0
-                racer.dy = random.randrange(5, 20, 1) / 100
+                racer.dy = random.randrange(100, 120, 1) / 1000
 
-racer_1 = Racers(0, 0, "green")
-racer_2 = Racers(100, 0, "white")
-racer_3 = Racers(-100, 0, "red")
-racer_4 = Racers(50, 0, "aqua")
-racer_5 = Racers(-50, 0, "yellow")
+racer_1 = Racers(0, -100, "green")
+racer_2 = Racers(100, -100, "white")
+racer_3 = Racers(-100, -100, "red")
+racer_4 = Racers(50, -100, "aqua")
+racer_5 = Racers(-50, -100, "yellow")
 
 racers = []
 racers.append(racer_1)
