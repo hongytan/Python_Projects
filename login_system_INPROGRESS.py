@@ -6,10 +6,6 @@ WIDTH = 300
 HEIGHT = 300
 
 # Functions
-def append_storage(email, password):
-    storage_email_label['text'] = email
-    storage_pass_label['text'] = password
-
 def system_password(user_input):
     """ Checks if inputted password is correct and logins """
     if user_input == '':
@@ -41,9 +37,7 @@ def system_password(user_input):
         pass_entry.place(relx=0.3, rely = 0.2, relwidth=0.6, relheight = 0.1)
 
         # Button GUI
-        storage_button = tk.Button(email_frame, text = 'Register', font=('Courier', 13),
-                                   command=lambda: append_storage(email_entry.get(),
-                                                                  pass_entry.get()))
+        storage_button = tk.Button(email_frame, text = 'Register', font=('Courier', 13))                    
         storage_button.place(relx = 0.3, rely = 0.4, relwidth = 0.4, relheight = 0.1)
 
         # Frame for email storage
@@ -59,9 +53,6 @@ def system_password(user_input):
         storage_pass_label = tk.Label(storage_frame, bg='white', text = 'Password', anchor='ne',
                                       font=('Courier', 12))
         storage_pass_label.place(relx = 0.5, relwidth=0.5, relheight=1)
-
-        
-
 
 root = tk.Tk()
 root.title("Email Storage")
