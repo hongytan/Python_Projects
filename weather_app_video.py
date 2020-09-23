@@ -6,6 +6,7 @@ import requests
 HEIGHT = 500
 WIDTH = 600
 
+
 def label_text(weather):
     try:
         city = weather['name']
@@ -39,7 +40,7 @@ frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.1)
 entry = tk.Entry(frame, font = ('Courier', 20))
 entry.place(relwidth=0.65, relheight=1)
 
-button = tk.Button(frame, text="Get Weather", font=('Courier',17), command=lambda: get_weather(entry.get()))
+button = tk.Button(frame, text="Get Weather", font=('Courier',15), command=lambda: get_weather(entry.get()))
 button.place(relx = 0.7, relwidth = 0.3, relheight = 1)
 
 frame_bottom = tk.Frame(root, bg='#80c1ff', bd=10)
